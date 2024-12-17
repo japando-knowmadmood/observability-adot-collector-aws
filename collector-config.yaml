@@ -1,0 +1,21 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  awsxray: {}
+  awscloudwatchlogs:
+    log_group_name: "/microservices/logs"
+    region: "eu-west-2"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [awsxray]
+    logs:
+      receivers: [otlp]
+      exporters: [awscloudwatchlogs]
+

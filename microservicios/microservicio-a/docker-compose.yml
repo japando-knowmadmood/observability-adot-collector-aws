@@ -1,0 +1,15 @@
+services:
+  service-a:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: service-a
+    ports:
+      - "8080:8080"
+    networks:
+      - observability-network
+
+networks:
+  observability-network:
+    external: true
+

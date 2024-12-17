@@ -1,0 +1,24 @@
+services:
+  adot-collector:
+    image: public.ecr.aws/aws-observability/aws-otel-collector:latest
+    #image: amazonlinux:2
+    container_name: adot-collector
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "55681:55681" # OTLP HTTP
+      - "8888:8888"  # Puerto de métricas del ADOT Collector
+    volumes:
+      - ./collector-config.yaml:/etc/collector-config.yaml
+      #- ./config.yaml:/opt/aws/aws-otel-collector/etc/config.yaml
+    #command: sh -c "sleep infinity"  
+    environment:
+      - AWS_ACCESS_KEY_ID=TU_ACCESS_KEY
+      - AWS_SECRET_ACCESS_KEY=TU_SECRET_ACCESS_KEY
+      - AWS_REGION=eu-west-2
+    networks:
+      - observability-network
+
+networks:
+  observability-network:
+    external: true
+
